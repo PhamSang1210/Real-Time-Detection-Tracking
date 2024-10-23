@@ -123,18 +123,17 @@ streamlit run app.py
 <h1 id="fix_more">Khắc phục lỗi</h1>
 1. Lỗi file <b>crowdhuman_yolov5m.pt</b>
 
-```bash
-thì tải xuống file tại đây ... và copy file vừa tải về ghi đè lên (overide)
-```
+thì tải xuống file tại đây [https://drive.google.com/file/d/1zPGZ6kr2A9mx3LzSJN2pUdC9Fna7PJN9/view?usp=drive_link] và copy file vừa tải về ghi đè lên (overide)
 
 2. Lỗi file <b>ckpt.t7</b>
 
-```bash
-thì tải xuống file tại đây ... và copy file vừa tải về ghi đè lên (overide)
-```
+thì tải xuống file tại đây => [https://drive.google.com/file/d/1rplWhXBWRm8JOhCjqz6tGABQ7KTjiUqx/view?usp=drive_link] và copy file vừa tải về ghi đè lên (overide) file cũ
 
 <h4 id="download_video">Thư mục tải video cho chương trình</h4>
-....
+
+-   [Video Test 1](https://drive.google.com/file/d/1Z_3RjO9zkKUUqoyK20ykFifZPWch3dsY/view?usp=drive_link)
+
+-   [Video Test 2](https://drive.google.com/file/d/1_0sAg5yvUX75WhsW1UfnIFRNNmWlU32n/view?usp=drive_link)
 
 ### Chú ý nếu lỗi do thiếu công cụ thì tải thêm
 
@@ -146,10 +145,14 @@ thì tải xuống file tại đây ... và copy file vừa tải về ghi đè 
 
 <h1 id="result_program">Hình ảnh chương trình</h1>
 
-<img src="./data/images/image.png" />
+<img src="./data/images/result_1.png" />
+
+<img src="./data/images/result_2.png" />
+
+-   ### Tài liệu tham khảo
 
     1. Tương thích pytorch:
-    https://github.com/pytorch/vision#installation
+       https://github.com/pytorch/vision#installation
 
-    2.  Đường dẫn video:
-    https://mazwai.com/video/view-of-pedestrian-crossing-taiwan/455371
+    2. Đường dẫn video:
+       https://mazwai.com/video/view-of-pedestrian-crossing-taiwan/455371
