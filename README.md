@@ -69,7 +69,7 @@ pip install tensorboard==2.4.1
 ```
 
 ```bash
-pip install # wandb
+pip install wandb
 ```
 
 ```bash
@@ -77,11 +77,11 @@ pip install
 ```
 
 ```bash
-pip install # Plotting
+pip install Plotting
 ```
 
 ```bash
-pip install pandas==1.1.4 #ok
+pip install pandas==1.1.4
 ```
 
 ```bash
@@ -101,11 +101,11 @@ pip install googledrivedownloader
 ```
 
 ```bash
-pip install thop  # FLOPs computation
+pip install thop
 ```
 
 ```bash
-pip install easydict # deep sort
+pip install easydict
 ```
 
 <b>hoặc dùng lệnh <b>khi clone mã nguồn</b></b>
@@ -147,3 +147,9 @@ thì tải xuống file tại đây ... và copy file vừa tải về ghi đè 
 <h1 id="result_program">Hình ảnh chương trình</h1>
 
 <img src="../realtime-tracking-main/data/images/image.png" />
+
+    1. Tương thích pytorch:
+    https://github.com/pytorch/vision#installation
+
+    2.  Đường dẫn video:
+    https://mazwai.com/video/view-of-pedestrian-crossing-taiwan/455371
