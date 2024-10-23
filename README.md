@@ -146,7 +146,7 @@ thì tải xuống file tại đây ... và copy file vừa tải về ghi đè 
 
 <h1 id="result_program">Hình ảnh chương trình</h1>
 
-<img src="../realtime-tracking-main/data/images/image.png" />
+<img src="./data/images/image.png" />
 
     1. Tương thích pytorch:
     https://github.com/pytorch/vision#installation
