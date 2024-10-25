@@ -140,7 +140,7 @@ def predict(model, deepsort_model,img):
 
 if __name__ == "__main__":
 
-    st.header("Phan Minh Toan @Real-Time Detection & Tracking")
+    st.header("SANG@Real-Time Detection & Tracking")
 
     if (not os.path.exists('./yolov5n.pt')):
         with st.spinner(text="Download detection model in progress..."):

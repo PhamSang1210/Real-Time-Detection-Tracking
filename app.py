@@ -41,7 +41,6 @@ class_label = ['person', 'head']
 #          "lo vi song", "lo nuong", "may nuong banh mi", "bon rua", "tu lanh", "sach", "dong ho", "binh hoa", "keo", "gau bong",
 #          'may say toc', 'ban chai danh rang']
 
-
 def letterbox(img, new_shape=(640, 640), color=(114, 114, 114), auto=True, scaleFill=False, scaleup=True):
     shape = img.shape[:2]  # current shape [height, width]
     if isinstance(new_shape, int):
@@ -91,13 +90,13 @@ def predict(model, deepsort_model,img):
           
         pred = model(image)
         #print("pred shape:", pred.shape)
-        temp_img = None
+        # temp_img = None
         #class filer
-        class_filter = 0
+        # class_filter = 0
         
         pred = non_max_suppression(pred, 0.5, 0.5,classes = 0)
         #print(pred[0])
-        num_boxes = 0 
+        # num_boxes = 0 
         # Process detections
         for i, det in enumerate(pred):  # detections per image
             annotator = Annotator(img_org, line_width=2, pil=not ascii)
