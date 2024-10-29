@@ -1,3 +1,5 @@
+<img src="./data/images/resultObjectYolo.gif"/>
+
 <h1 id="top_page">Cài đặt chương trình</h1>
 
 1. <a href="#install_py">Cài đặt python</a>

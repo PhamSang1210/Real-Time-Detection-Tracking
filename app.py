@@ -1,15 +1,12 @@
 # limit the number of cpus used by high performance libraries
 import os
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ["OPENBLAS_NUM_THREADS"] = "1"
-os.environ["MKL_NUM_THREADS"] = "1"
-os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
-os.environ["NUMEXPR_NUM_THREADS"] = "1"
-
+# os.environ["OMP_NUM_THREADS"] = "4"
+# os.environ["OPENBLAS_NUM_THREADS"] = "4"
+# os.environ["MKL_NUM_THREADS"] = "4"
+# os.environ["VECLIB_MAXIMUM_THREADS"] = "4"
+# os.environ["NUMEXPR_NUM_THREADS"] = "4"
 import sys
 sys.path.insert(0, './detection_module')
-
-
 from detection_module.models.common import DetectMultiBackend
 from detection_module.utils.general import non_max_suppression, scale_coords, xyxy2xywh
 from detection_module.utils.plots import Annotator, colors
@@ -29,17 +26,18 @@ import streamlit as st
 import tempfile
 from google_drive_downloader import GoogleDriveDownloader as gdd
 import os
-class_label = ['person', 'head']
 
-# class_label = ["nguoi", "xe dap", "o to", "xe may", "may bay", "xe buyt", "tau hoa", "xe tai", "thuyen", "den giao thong",
-#          "voi chua chay", "bien bao dung", "dong ho do xe", "bang ghe", "chim", "meo", "cho", "ngua", "cuu", "bo",
-#          "voi", "gau", "ngua van", "huou cao co", "ba lo", "o", "tui xach", "ca vat", "vali", "dia bay",
-#          "van truot", "van truot tuyet", "bong the thao", "dieu", "gay bong chay", "gang tay bong chay", "van truot", "van luot song",
-#          "vot tennis", "chai", "ly ruou", "coc", "nia", "dao", "muong", "bat", "chuoi", "tao",
-#          "sandwich", "cam", "sup lo xanh", "ca rot", "xuc xich", "pizza", "banh ran", "banh ngot", "ghe", "di vang",
-#          "chau cay", "giuong", "ban an", "toilet", "tv", "may tinh xach tay", "chuot", "dieu khien tu xa", "ban phim", "dien thoai di dong",
-#          "lo vi song", "lo nuong", "may nuong banh mi", "bon rua", "tu lanh", "sach", "dong ho", "binh hoa", "keo", "gau bong",
-#          'may say toc', 'ban chai danh rang']
+# class_label = ['person', 'head']
+
+class_label = ["nguoi", "xe dap", "o to", "xe may", "may bay", "xe buyt", "tau hoa", "xe tai", "thuyen", "den giao thong",
+         "voi chua chay", "bien bao dung", "dong ho do xe", "bang ghe", "chim", "meo", "cho", "ngua", "cuu", "bo",
+         "voi", "gau", "ngua van", "huou cao co", "ba lo", "o", "tui xach", "ca vat", "vali", "dia bay",
+         "van truot", "van truot tuyet", "bong the thao", "dieu", "gay bong chay", "gang tay bong chay", "van truot", "van luot song",
+         "vot tennis", "chai", "ly ruou", "coc", "nia", "dao", "muong", "bat", "chuoi", "tao",
+         "sandwich", "cam", "sup lo xanh", "ca rot", "xuc xich", "pizza", "banh ran", "banh ngot", "ghe", "di vang",
+         "chau cay", "giuong", "ban an", "toilet", "tv", "may tinh xach tay", "chuot", "dieu khien tu xa", "ban phim", "dien thoai di dong",
+         "lo vi song", "lo nuong", "may nuong banh mi", "bon rua", "tu lanh", "sach", "dong ho", "binh hoa", "keo", "gau bong",
+         'may say toc', 'ban chai danh rang']
 
 def letterbox(img, new_shape=(640, 640), color=(114, 114, 114), auto=True, scaleFill=False, scaleup=True):
     shape = img.shape[:2]  # current shape [height, width]
@@ -94,8 +92,11 @@ def predict(model, deepsort_model,img):
         #class filer
         # class_filter = 0
         
-        pred = non_max_suppression(pred, 0.5, 0.5,classes = 0)
-        #print(pred[0])
+        #throw class index 0
+        # pred = non_max_suppression(pred, 0.5, 0.5,classes = 0)
+
+        # no choose class is all class
+        pred = non_max_suppression(pred, 0.5, 0.5)
         # num_boxes = 0 
         # Process detections
         for i, det in enumerate(pred):  # detections per image
@@ -157,12 +158,17 @@ if __name__ == "__main__":
                                     dest_path='./crowdhuman_yolov5m.pt')
 
 
-    deepsort = DeepSort(model_path='ckpt.t7', use_cuda=False)
-
-    #model = DetectMultiBackend(weights = 'crowdhuman_yolov5m.pt', device='cpu')
-    model = DetectMultiBackend(weights = 'crowdhuman_yolov5m.pt', device = 'cpu')
+    # deepsort = DeepSort(model_path='ckpt.t7', use_cuda=False)
     
-    uploaded_file = st.file_uploader("Upload file")
+    deepsort = DeepSort(model_path='ckpt.t7', use_cuda=True)
+
+
+
+    # model change object
+    # model = DetectMultiBackend(weights = 'crowdhuman_yolov5m.pt', device ='cpu')
+    model = DetectMultiBackend(weights = 'yolov5m.pt', device ='cpu')
+    
+    uploaded_file = st.file_uploader("Tải video lên")
     tfile = tempfile.NamedTemporaryFile(delete=False) 
     if uploaded_file is not None:
         tfile.write(uploaded_file.getvalue())
