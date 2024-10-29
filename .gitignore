@@ -1,3 +1,4 @@
 *.t7
-*.pt
+crowdhuman_yolov5m.pt
+yolov5n.pt
 demo.py

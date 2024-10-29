@@ -159,14 +159,15 @@ if __name__ == "__main__":
 
 
     # deepsort = DeepSort(model_path='ckpt.t7', use_cuda=False)
-    
+
     deepsort = DeepSort(model_path='ckpt.t7', use_cuda=True)
 
 
 
     # model change object
     # model = DetectMultiBackend(weights = 'crowdhuman_yolov5m.pt', device ='cpu')
-    model = DetectMultiBackend(weights = 'yolov5m.pt', device ='cpu')
+    # model = DetectMultiBackend(weights = 'yolov5m.pt', device ='cpu')
+    model = DetectMultiBackend(weights = 'model.pt', device ='cpu')
     
     uploaded_file = st.file_uploader("Tải video lên")
     tfile = tempfile.NamedTemporaryFile(delete=False) 
