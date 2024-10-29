@@ -143,14 +143,6 @@ thì tải xuống file tại đây => [https://drive.google.com/file/d/1rplWhXB
 
 2. [Tải xuống Visual Studio C++](https://aka.ms/vs/17/release/vs_BuildTools.exe)
 
-<a href="#top_page">Cuộn lên đầu trang</a>
-
-<h1 id="result_program">Hình ảnh chương trình</h1>
-
-<img src="./data/images/result_1.png" />
-
-<img src="./data/images/result_2.png" />
-
 -   ### Tài liệu tham khảo
 
     1. Tương thích pytorch:
@@ -158,3 +150,5 @@ thì tải xuống file tại đây => [https://drive.google.com/file/d/1rplWhXB
 
     2. Đường dẫn video:
        https://mazwai.com/video/view-of-pedestrian-crossing-taiwan/455371
+
+<a href="#top_page">Cuộn lên đầu trang -> TO UP</a>
