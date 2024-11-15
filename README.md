@@ -122,6 +122,18 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+### Hiển Thị Được Giao Diện Web Sau:
+
+<img height="auto" width="auto" src="./data/images/imageCMD.png" />
+
+### Tiếp theo chọn vào -> <i>Browser Files</i>
+
+<img height="auto" width="auto" src="./data/images/step2.png" />
+
+#### Chọn vào tải về từ mã nguồn và được kết quả như sau:
+
+<img height="auto" width="auto" src="./data/images/image.png" />
+
 <h1 id="fix_more">Khắc phục lỗi</h1>
 1. Lỗi file <b>crowdhuman_yolov5m.pt</b>
 
