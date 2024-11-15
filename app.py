@@ -139,7 +139,6 @@ def predict(model, deepsort_model,img):
 
 
 if __name__ == "__main__":
-
     st.header("✨SANG - Real-Time Detection & Tracking")
 
     if (not os.path.exists('./yolov5n.pt')):
@@ -163,9 +162,9 @@ if __name__ == "__main__":
     deepsort = DeepSort(model_path='ckpt.t7', use_cuda=True)
 
     # model change object
-    # model = DetectMultiBackend(weights = 'crowdhuman_yolov5m.pt', device ='cpu')
+    model = DetectMultiBackend(weights = 'crowdhuman_yolov5m.pt', device ='cpu')
     # model = DetectMultiBackend(weights = 'yolov5m.pt', device ='cpu')
-    model = DetectMultiBackend(weights = 'model.pt', device ='cpu')
+    # model = DetectMultiBackend(weights = 'model.pt', device ='cpu')
     
     uploaded_file = st.file_uploader("Tải video lên")
     tfile = tempfile.NamedTemporaryFile(delete=False) 
@@ -177,7 +176,6 @@ if __name__ == "__main__":
 
     while vf.isOpened():
         ret, frame = vf.read()
-        
         # if frame is read correctly ret is True
         if not ret:
             print("Can't receive frame (stream end?). Exiting ...")
