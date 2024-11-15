@@ -94,6 +94,12 @@ pip install seaborn==0.11.0
 pip install streamlit==1.1.0
 ```
 
+hoặc
+
+```bash
+pip install streamlit==1.21.0
+```
+
 ```bash
 pip install streamlit-webrtc==0.32.0
 ```
