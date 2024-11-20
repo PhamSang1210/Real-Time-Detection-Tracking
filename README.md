@@ -2,7 +2,7 @@
 
 <h1 id="top_page">Cài đặt chương trình</h1>
 
-### [Tổng Hợp cú pháp chạy chương trình](#total_command)
+[Tổng Hợp cú pháp chạy chương trình](#total_command)
 
 1. <a href="#install_py">Cài đặt python</a>
 
