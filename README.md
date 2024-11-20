@@ -2,6 +2,8 @@
 
 <h1 id="top_page">Cài đặt chương trình</h1>
 
+### [Tổng Hợp cú pháp chạy chương trình](#total_command)
+
 1. <a href="#install_py">Cài đặt python</a>
 
 2. <a href="#install_lib">Cài đặt thư viện</a>
@@ -140,7 +142,7 @@ streamlit run app.py
 
 <img height="auto" width="auto" src="./data/images/image.png" />
 
-# Tổng hợp chạy file chương trình
+# Tổng hợp chạy file chương trình {#total_command}
 
 |   Tên file   |           Cú Pháp            |                        Mục đích                         |
 | :----------: | :--------------------------: | :-----------------------------------------------------: |
