@@ -142,7 +142,7 @@ streamlit run app.py
 
 <img height="auto" width="auto" src="./data/images/image.png" />
 
-# Tổng hợp chạy file chương trình { #total_command}
+# Tổng hợp chạy file chương trình {#total_command}
 
 |   Tên file   |           Cú Pháp            |                        Mục đích                         |
 | :----------: | :--------------------------: | :-----------------------------------------------------: |
