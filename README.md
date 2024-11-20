@@ -142,6 +142,8 @@ streamlit run app.py
 
 <img height="auto" width="auto" src="./data/images/image.png" />
 
+---
+
 # Tổng hợp chạy file chương trình { #total_command}
 
 |   Tên file   |           Cú Pháp            |                        Mục đích                         |
@@ -149,6 +151,8 @@ streamlit run app.py
 |  webcam.py   |  `streamlit run webcam.py`   |         Theo dõi đối tượng trực tiếp qua webcam         |
 | nextframe.py | `streamlit run nextframe.py` | Chạy video với tốc độ nhanh hơn do di chuyển khung hình |
 |    app.py    |    `streamlit run app.py`    |           File gốc không có 2 chức năng trên            |
+
+---
 
 <h1 id="fix_more">Khắc phục lỗi</h1>
 1. Lỗi file <b>crowdhuman_yolov5m.pt</b>
