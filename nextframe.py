@@ -4,22 +4,15 @@ sys.path.insert(0, './detection_module')
 from detection_module.models.common import DetectMultiBackend
 from detection_module.utils.general import non_max_suppression, scale_coords, xyxy2xywh
 from detection_module.utils.plots import Annotator, colors
-from tracking_module.utils.parser import get_config
 from tracking_module.deep_sort import DeepSort
-import argparse
-import os
-import platform
-import shutil
 import time
 from pathlib import Path
 import cv2
 import torch
-import torch.backends.cudnn as cudnn
 import numpy as np
 import streamlit as st
 import tempfile
 from google_drive_downloader import GoogleDriveDownloader as gdd
-import os
 
 # ADD pencirl
 class_label = ["nguoi", "xe dap", "o to", "xe may", "may bay", "xe buyt", "tau hoa", "xe tai", "thuyen", "den giao thong",
@@ -63,86 +56,73 @@ def letterbox(img, new_shape=(640, 640), color=(114, 114, 114), auto=True, scale
     img = cv2.copyMakeBorder(img, top, bottom, left, right, cv2.BORDER_CONSTANT, value=color)  # add border
     return img, ratio, (dw, dh)
 
-
 def predict(model, deepsort_model,img):
-        img_org = img.copy()
-        h,w,s = img_org.shape
-        img = letterbox(img, new_shape = 640)[0]
+    img_org = img.copy()
+    h,w,s = img_org.shape
+    img = letterbox(img, new_shape = 640)[0]
 
-        img = img[:, :, ::-1].transpose(2, 0, 1) 
-        image = img.astype(np.float32)
-        image /= 255.0
-        image = np.expand_dims(image, 0)
+    img = img[:, :, ::-1].transpose(2, 0, 1) 
+    image = img.astype(np.float32)
+    image /= 255.0
+    image = np.expand_dims(image, 0)
 
-        image = torch.from_numpy(image)
+    image = torch.from_numpy(image)
 
-        pred = model(image)
-       
-        # no choose class is all class
-        pred = non_max_suppression(pred, 0.5, 0.5)
-        # num_boxes = 0 
-        # Process detections
-        for i, det in enumerate(pred):  # detections per image
-            annotator = Annotator(img_org, line_width=2, pil=not ascii)
-            if det is not None and len(det):
-                # Rescale boxes from img_size to im0 size
-                det[:, :4] = scale_coords(
-                    image.shape[2:], det[:, :4], img_org.shape).round()
+    pred = model(image)
 
-                # Print results
-                for c in det[:, -1].unique():
-                    n = (det[:, -1] == c).sum()  # detections per class
-                    #s += f"{n} {class_label[int(c)]}{'s' * (n > 1)}, "  # add to string
+    # no choose class is all class
+    pred = non_max_suppression(pred, 0.5, 0.5)
 
-                xywhs = xyxy2xywh(det[:, 0:4])
-                confs = det[:, 4]
-                clss = det[:, 5]
-                
-                ### filter class
-                
-                # pass detections to deepsort
-                outputs = deepsort_model.update(xywhs.cpu(), confs.cpu(), clss.cpu(), img_org)
-                
-                # draw boxes for visualization
-                if len(outputs) > 0:
-                    for j, (output, conf) in enumerate(zip(outputs, confs)): 
-                        bboxes = output[0:4]
-                        id = output[4]
-                        cls = output[5]
+    # Process detections
+    for i, det in enumerate(pred):  # detections per image
+        annotator = Annotator(img_org, line_width=2, pil=not ascii)
+        if det is not None and len(det):
+            # Rescale boxes from img_size to im0 size
+            det[:, :4] = scale_coords(
+                image.shape[2:], det[:, :4], img_org.shape).round()
 
-                        c = int(cls)  # integer class
-                        
-                        label =  str(id) + " " + str(class_label[c]) + " "+ str(round(float(conf),2)) #f'{id} {class_label[c]} {conf:.2f}'
-                        annotator.box_label(bboxes, label, color=colors(c, True))
+            # Process each detection
+            xywhs = xyxy2xywh(det[:, 0:4])
+            confs = det[:, 4]
+            clss = det[:, 5]
 
-            # Stream results
-            img_org = annotator.result()
-                        
-        return img_org    
+            # pass detections to deepsort
+            outputs = deepsort_model.update(xywhs.cpu(), confs.cpu(), clss.cpu(), img_org)
 
+            # draw boxes for visualization
+            if len(outputs) > 0:
+                for j, (output, conf) in enumerate(zip(outputs, confs)): 
+                    bboxes = output[0:4]
+                    id = output[4]
+                    cls = output[5]
+
+                    c = int(cls)  # integer class
+                    
+                    label =  str(id) + " " + str(class_label[c]) + " "+ str(round(float(conf),2)) #f'{id} {class_label[c]} {conf:.2f}'
+                    annotator.box_label(bboxes, label, color=colors(c, True))
+
+        # Stream results
+        img_org = annotator.result()
+
+    return img_org
 
 if __name__ == "__main__":
     st.header("✨SANG - Real-Time Detection & Tracking")
 
     if (not os.path.exists('./yolov5n.pt')):
         with st.spinner(text="Download detection model in progress..."):
-            gdd.download_file_from_google_drive(file_id='1V5hUspqnI6uvBIPyccga9lsz8-fWFQ9p',
-                                    dest_path='./yolov5n.pt')
+            gdd.download_file_from_google_drive(file_id='1V5hUspqnI6uvBIPyccga9lsz8-fWFQ9p', dest_path='./yolov5n.pt')
 
     if (not os.path.exists('./ckpt.t7')):
         with st.spinner(text="Download tracking model in progress..."):
-            gdd.download_file_from_google_drive(file_id='1GJpFNw0fU-6X1z8_x_Mb7f5A9pRtLZt_',
-                                    dest_path='./ckpt.t7')
+            gdd.download_file_from_google_drive(file_id='1GJpFNw0fU-6X1z8_x_Mb7f5A9pRtLZt_', dest_path='./ckpt.t7')
 
     if (not os.path.exists('./crowdhuman_yolov5m.pt')):
         with st.spinner(text="Download tracking model in progress..."):
-            gdd.download_file_from_google_drive(file_id='1Bz_tZia6BeAy7PW1LJm5x8469D0ooDtQ',
-                                    dest_path='./crowdhuman_yolov5m.pt')
-
+            gdd.download_file_from_google_drive(file_id='1Bz_tZia6BeAy7PW1LJm5x8469D0ooDtQ', dest_path='./crowdhuman_yolov5m.pt')
 
     deepsort = DeepSort(model_path='ckpt.t7', use_cuda=True)
-
-    model = DetectMultiBackend(weights = 'model.pt', device ='cpu')
+    model = DetectMultiBackend(weights='model.pt', device='cpu')
 
     uploaded_file = st.file_uploader("Tải video lên")
     tfile = tempfile.NamedTemporaryFile(delete=False) 
@@ -152,18 +132,27 @@ if __name__ == "__main__":
     vf = cv2.VideoCapture(tfile.name)
     stframe = st.empty()
 
+    # Get the FPS of the video to maintain the original speed
+    fps = vf.get(cv2.CAP_PROP_FPS)
 
-    frame_delay = 0.01
+    # To speed up the video, adjust frame skipping rate
+    frame_skip = 5  # Set this to 1 to process every frame. Increase this to skip frames and speed up processing
 
     while vf.isOpened():
         ret, frame = vf.read()
-        # if frame is read correctly ret is True
         if not ret:
             print("Can't receive frame (stream end?). Exiting ...")
             break
+
+        # Skip frames based on frame_skip
+        for _ in range(frame_skip):
+            ret, frame = vf.read()
+            if not ret:
+                break
+
         frame = predict(model, deepsort, frame)
-        frame= cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         stframe.image(frame)
 
-        # Add a small delay to control speed
-        time.sleep(frame_delay)  # You can decrease this delay to make it faster
+        # Sleep for a shorter duration to speed up processing
+        time.sleep(1 / (fps * frame_skip))  # Adjust the delay to maintain original speed or make it faster
